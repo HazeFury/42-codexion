@@ -10,3 +10,15 @@ _This project has been created as part of the 42 curriculum by marberge._
 # Codexion
 
 ![Language](https://img.shields.io/badge/Language-C-blue)
+
+
+## I. Description
+
+
+## II. Instructions
+
+
+## III. Resources
+
+
+## IV. Additional content
