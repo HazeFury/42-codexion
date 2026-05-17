@@ -8,8 +8,6 @@ pthread_mutex_t account_mutex;
 
 // 3. Create the routine function that each thread will execute
 void deposit_money(void *arguments) {
-
-	
 	// Loop one million times to increment the balance
 	int	i;
 	i = 0;
@@ -31,12 +29,9 @@ void deposit_money(void *arguments) {
     return NULL;
 }
 
-
 // 4. Main program execution
 int main()
 {
-
-	
 	// Initialize the mutex with default attributes
     init_mutex(&account_mutex, NULL);
     
