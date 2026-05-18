@@ -4,7 +4,6 @@
 // 1. Define a context structure to hold all shared resources
 typedef struct s_bank_context {
     int             shared_balance;
-    pthread_mutex_t account_mutex;
 } t_bank_context;
 
 // 2. The routine function
@@ -14,18 +13,8 @@ void *deposit_money(void *args) {
     int i = 0;
 
     while (i < 1000000) {
-        // --- CRITICAL SECTION START ---
-        // Lock the mutex using the one inside the structure
-        pthread_mutex_lock(&ctx->account_mutex);
-        
         // Read, increment, and write the new balance
         ctx->shared_balance = ctx->shared_balance + 1;
-        
-        // Unlock the mutex
-        pthread_mutex_unlock(&ctx->account_mutex);
-        // --- CRITICAL SECTION END ---
-
-        // Local variable manipulation happens outside the lock (optimization)
         i++;
     }
     return NULL;
@@ -38,7 +27,6 @@ int main(void) {
     
     // Initialize our shared variables properly
     ctx.shared_balance = 0;
-    pthread_mutex_init(&ctx.account_mutex, NULL);
     
     // Declare thread variables
     pthread_t thread_1;
@@ -51,9 +39,6 @@ int main(void) {
     // Wait for both threads to finish
     pthread_join(thread_1, NULL);
     pthread_join(thread_2, NULL);
-    
-    // Clean up memory by destroying the mutex
-    pthread_mutex_destroy(&ctx.account_mutex);
     
     // Print the final result
     printf("Final balance: %d\n", ctx.shared_balance);
