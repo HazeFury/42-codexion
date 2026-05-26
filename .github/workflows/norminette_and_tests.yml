@@ -1,5 +1,4 @@
----
-name: Norminette
+name: Norminette and parsing tests
 
 on:
   pull_request:
@@ -8,7 +7,7 @@ on:
 
 jobs:
   check-norminette:
-    name: Norminette
+    name: Norminette & parsing test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,3 +17,14 @@ jobs:
         uses: 42School/norminette@3.3.59
         with:
           args: '-RCheckForbiddenSourceHeader'
+
+      - name: Configuring Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Running unit tests
+        run: make test

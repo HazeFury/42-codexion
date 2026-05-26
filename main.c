@@ -6,14 +6,18 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:54 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/26 12:02:13 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:44:41 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "codexion.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	printf("hello world");
+	t_args	args;
+
+	memset(&args, 0, sizeof(t_args));
+	if (!parse_arguments(argc, argv, &args))
+		return (1);
 	return (0);
 }

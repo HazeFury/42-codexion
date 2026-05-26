@@ -1,9 +1,10 @@
 NAME        = codexion
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -pthread
-SRCS        = main.c
 OBJS        = $(SRCS:.c=.o)
 INCLUDES    = -I.
+SRCS        = main.c \
+			  src/parsing.c
 
 all: $(NAME)
 
@@ -27,7 +28,7 @@ fclean: clean
 re: fclean all
 
 test: $(NAME)
-	@echo "Lunching all tests..."
+	@echo "Launching all tests..."
 	@pytest tests/test_parsing.py -v
 
 .PHONY: all clean fclean re test
