@@ -6,12 +6,11 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:54 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/26 11:42:38 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:02:13 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-
 
 int	main(void)
 {
