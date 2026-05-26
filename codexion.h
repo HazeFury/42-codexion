@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/26 15:52:34 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/26 18:54:43 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <pthread.h>
 
 typedef enum e_scheduler
 {
@@ -34,6 +35,37 @@ typedef struct s_args
 	long long		dongle_cooldown;
 	t_scheduler		scheduler;
 }				t_args;
+
+typedef struct s_dongle
+{
+    int             id;
+    pthread_mutex_t mutex;          // Le verrou physique du dongle
+    long long       available_at;   // Le timestamp à partir duquel le cooldown est fini
+    pthread_cond_t  cond;           // La salle d'attente pour ce dongle
+    void            *wait_queue;    // Pointeur vers ton futur tas (Heap/Priority Queue)
+}               t_dongle;
+
+typedef struct s_coder
+{
+    int             id;
+    pthread_t       thread;         // L'identifiant du thread POSIX
+    t_dongle        *left_dongle;   // Pointeur vers le dongle de gauche
+    t_dongle        *right_dongle;  // Pointeur vers le dongle de droite
+    long long       last_compile_start; // Timestamp crucial pour éviter le burnout
+    size_t          compiles_done;      // Nombre de fois qu'il a compilé
+    pthread_mutex_t state_mutex;    // Protège l'accès à last_compile_start et compiles_done
+    t_sim           *sim;           // Lien vers le contexte global
+}               t_coder;
+typedef struct s_sim
+{
+    t_args          args;               // Les paramètres qu'on a déjà parsés
+    long long       start_time;         // Le T0 de la simulation (pour calculer les timestamps)
+    int             is_running;         // Flag (1 = en cours, 0 = terminé)
+    pthread_mutex_t sim_mutex;          // Protège la variable is_running
+    pthread_mutex_t write_mutex;        // Protège les printf pour que les logs ne se mélangent pas
+    t_dongle        *dongles;           // Tableau alloué dynamiquement contenant tous les dongles
+    t_coder         *coders;            // Tableau alloué dynamiquement contenant tous les codeurs
+}               t_sim;
 
 // ================================  PARSING  ================================
 
