@@ -1,9 +1,10 @@
 NAME        = codexion
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -pthread
-SRCS        = main.c
 OBJS        = $(SRCS:.c=.o)
 INCLUDES    = -I.
+SRCS        = main.c \
+			  src/parsing.c
 
 all: $(NAME)
 
