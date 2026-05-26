@@ -1,3 +1,4 @@
 codexion
 *.d
 *.o
+__pycache__

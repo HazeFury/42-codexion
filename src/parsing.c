@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 13:35:01 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/26 15:44:08 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/26 18:17:58 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ static int	check_parsed_vals(t_args *args)
 int	parse_arguments(int argc, char **argv, t_args *args)
 {
 	if (argc != 9)
+	{
+		fprintf(stderr, "ERROR : The number of arguments provided is ");
+		fprintf(stderr, "incorrect.\nExpected 8. Received %d\n", argc - 1);
 		return (0);
+	}
 	args->number_of_coders = parse_number(argv[1]);
 	args->time_to_burnout = parse_number(argv[2]);
 	args->time_to_compile = parse_number(argv[3]);
@@ -97,7 +101,8 @@ int	parse_arguments(int argc, char **argv, t_args *args)
 	args->dongle_cooldown = parse_number(argv[7]);
 	if (!check_parsed_vals(args) || !parse_scheduler(argv[8], &args->scheduler))
 	{
-		printf("Wrong value detected during parsing. Aborting programm !\n");
+		fprintf(stderr, "ERROR : Wrong value detected during parsing. ");
+		fprintf(stderr, "Aborting programm !\n");
 		return (0);
 	}
 	return (1);

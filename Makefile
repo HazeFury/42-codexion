@@ -28,7 +28,7 @@ fclean: clean
 re: fclean all
 
 test: $(NAME)
-	@echo "Lunching all tests..."
+	@echo "Launching all tests..."
 	@pytest tests/test_parsing.py -v
 
 .PHONY: all clean fclean re test
