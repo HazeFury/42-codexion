@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Norminette
-        uses: 42School/norminette@<tag>
+        uses: 42School/norminette@3.3.59
         with:
           args: '-RCheckForbiddenSourceHeader'
