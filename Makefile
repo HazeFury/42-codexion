@@ -4,7 +4,9 @@ CFLAGS      = -Wall -Wextra -Werror -pthread
 OBJS        = $(SRCS:.c=.o)
 INCLUDES    = -I.
 SRCS        = main.c \
-			  src/parsing.c
+			  src/parsing.c \
+			  src/init.c \
+			  src/cleanup.c
 
 all: $(NAME)
 
