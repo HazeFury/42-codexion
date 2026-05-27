@@ -6,7 +6,9 @@ INCLUDES    = -I.
 SRCS        = main.c \
 			  src/parsing.c \
 			  src/init.c \
-			  src/cleanup.c
+			  src/cleanup.c \
+			  src/heap_utils.c \
+			  src/scheduler.c
 
 all: $(NAME)
 

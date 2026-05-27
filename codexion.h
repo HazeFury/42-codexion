@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/27 11:27:19 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/27 19:12:52 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_coder
 	t_dongle		*right_dongle; // Pointeur vers le dongle de droite
 	long long		last_compile_start; // Timestamp crucial to éviter burnout
 	size_t			compiles_done; // Nombre de fois qu'il a compilé
+	long long		request_time;
 	pthread_mutex_t	state_mutex; // Protège accès à last_compile/compiles_done
 	t_sim			*sim; // Lien vers le contexte global
 }				t_coder;
@@ -67,8 +68,33 @@ typedef struct s_sim
 	t_coder			*coders; // Tableau alloué dynamiquement pour les codeurs
 }				t_sim;
 
+typedef struct s_heap
+{
+	t_coder			**array;
+	size_t			size;
+	size_t			capacity;
+}				t_heap;
+
 // ================================  PARSING  ================================
 
-int	parse_arguments(int argc, char **argv, t_args *args);
+int		parse_arguments(int argc, char **argv, t_args *args);
+
+// ================================  CLEANUP  ================================
+
+void	free_simulation(t_sim *sim);
+
+// ===============================  HEAP UTILS  ==============================
+
+int		is_more_vip(t_coder *c1, t_coder *c2, t_scheduler policy);
+void	swap_coders(t_coder **a, t_coder **b);
+void	shift_up(t_heap *heap, size_t idx, t_scheduler policy);
+void	shift_down(t_heap *heap, size_t idx, t_scheduler policy);
+
+// ===============================  SCHEDULER  ===============================
+
+int		init_heap(t_heap *heap, size_t capacity);
+void	free_heap(t_heap *heap);
+int		heap_push(t_heap *heap, t_coder *coder, t_scheduler policy);
+t_coder	*heap_pop(t_heap *heap, t_scheduler policy);
 
 #endif
