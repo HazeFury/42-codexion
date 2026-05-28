@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/27 19:12:52 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/28 10:39:39 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_dongle
 	void			*wait_queue; // Pointeur vers futur (Heap/Priority Queue)
 }				t_dongle;
 
+// Forward declaration pour que le pointeur vers la simulation compile
+/* ** FORWARD DECLARATION 
+** We promise the compiler that t_sim exists and will be defined later.
+** This allows us to use t_sim* inside t_coder.
+*/
+typedef struct s_sim	t_sim;
+
 typedef struct s_coder
 {
 	int				id;
@@ -57,6 +64,7 @@ typedef struct s_coder
 	pthread_mutex_t	state_mutex; // Protège accès à last_compile/compiles_done
 	t_sim			*sim; // Lien vers le contexte global
 }				t_coder;
+
 typedef struct s_sim
 {
 	t_args			args; // Les paramètres qu'on a déjà parsés
@@ -87,8 +95,8 @@ void	free_simulation(t_sim *sim);
 
 int		is_more_vip(t_coder *c1, t_coder *c2, t_scheduler policy);
 void	swap_coders(t_coder **a, t_coder **b);
-void	shift_up(t_heap *heap, size_t idx, t_scheduler policy);
-void	shift_down(t_heap *heap, size_t idx, t_scheduler policy);
+void	sift_up(t_heap *heap, size_t idx, t_scheduler policy);
+void	sift_down(t_heap *heap, size_t idx, t_scheduler policy);
 
 // ===============================  SCHEDULER  ===============================
 

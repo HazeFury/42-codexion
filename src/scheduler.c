@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:57:04 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/27 19:13:09 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/28 10:38:50 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	heap_push(t_heap *heap, t_coder *coder, t_scheduler policy)
 	if (heap->size >= heap->capacity)
 		return (0);
 	heap->array[heap->size] = coder;
-	shift_up(heap, heap->size, policy);
+	sift_up(heap, heap->size, policy);
 	heap->size++;
 	return (1);
 }
@@ -66,6 +66,6 @@ t_coder	*heap_pop(t_heap *heap, t_scheduler policy)
 	heap->array[0] = heap->array[heap->size - 1];
 	heap->size--;
 	if (heap->size > 0)
-		shift_down(heap, 0, policy);
+		sift_down(heap, 0, policy);
 	return (top);
 }
