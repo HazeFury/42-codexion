@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:57:49 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/27 19:13:07 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/28 10:38:50 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	swap_coders(t_coder **a, t_coder **b)
 ** Shifts up the element at index idx to restore the min-heap property.
 ** Used during insertion (push).
 */
-void	shift_up(t_heap *heap, size_t idx, t_scheduler policy)
+void	sift_up(t_heap *heap, size_t idx, t_scheduler policy)
 {
 	size_t	parent;
 
@@ -67,7 +67,7 @@ void	shift_up(t_heap *heap, size_t idx, t_scheduler policy)
 ** Shifts down the element at index idx to restore the min-heap property.
 ** Used during extraction (pop).
 */
-void	shift_down(t_heap *heap, size_t idx, t_scheduler policy)
+void	sift_down(t_heap *heap, size_t idx, t_scheduler policy)
 {
 	size_t	left;
 	size_t	right;
