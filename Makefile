@@ -20,6 +20,9 @@ $(NAME): $(OBJS)
 
 -include $(SRCS:.c=.d)
 
+run: $(NAME)
+	./$(NAME)
+
 clean:
 	@rm -f $(OBJS) $(SRCS:.c=.d)
 	@rm -rf tests/__pycache__ .pytest_cache
@@ -35,4 +38,4 @@ test: $(NAME)
 	@echo "Launching all tests..."
 	@pytest tests/test_parsing.py -v
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re test run
