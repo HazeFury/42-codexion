@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/28 10:39:39 by marberge         ###   ########.fr       */
+/*   Updated: 2026/05/28 13:57:55 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef enum e_scheduler
 {
