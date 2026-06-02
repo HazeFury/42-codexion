@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:55:21 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/27 11:55:25 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/02 19:24:26 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ static void	free_dongles(t_sim *sim)
 	i = 0;
 	while (i < sim->args.number_of_coders)
 	{
+		if (sim->dongles[i].wait_queue)
+		{
+			free_heap((t_heap *)sim->dongles[i].wait_queue);
+			free(sim->dongles[i].wait_queue);
+		}
 		pthread_mutex_destroy(&sim->dongles[i].mutex);
 		pthread_cond_destroy(&sim->dongles[i].cond);
 		i++;
