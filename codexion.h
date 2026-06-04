@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/02 17:21:59 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 11:20:33 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,9 @@ t_coder	*heap_pop(t_heap *heap, t_scheduler policy);
 void	*coder_routine(void *arg);
 void	take_dongles(t_coder *coder);
 void	drop_dongles(t_coder *coder);
+
+// ================================  MONITOR  ================================
+
+void	*monitor_routine(void *arg);
 
 #endif
