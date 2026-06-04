@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/05/28 10:39:39 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 11:20:33 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef enum e_scheduler
 {
@@ -104,5 +105,15 @@ int		init_heap(t_heap *heap, size_t capacity);
 void	free_heap(t_heap *heap);
 int		heap_push(t_heap *heap, t_coder *coder, t_scheduler policy);
 t_coder	*heap_pop(t_heap *heap, t_scheduler policy);
+
+// ================================  ROUTINE  ================================
+
+void	*coder_routine(void *arg);
+void	take_dongles(t_coder *coder);
+void	drop_dongles(t_coder *coder);
+
+// ================================  MONITOR  ================================
+
+void	*monitor_routine(void *arg);
 
 #endif
