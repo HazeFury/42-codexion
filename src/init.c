@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:20:15 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 16:32:44 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:50:31 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static int	init_dongles(t_sim *sim)
 		sim->dongles[i].available_at = 0;
 		sim->dongles[i].wait_queue = NULL;
 		if (pthread_mutex_init(&sim->dongles[i].mutex, NULL) != 0)
-			return (0);
-		if (pthread_cond_init(&sim->dongles[i].cond, NULL) != 0)
 			return (0);
 		i++;
 	}

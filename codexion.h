@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 17:50:12 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:50:53 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_dongle
 	int				id;
 	pthread_mutex_t	mutex; // Le verrou physique du dongle
 	long long		available_at; // timestamp de quand le cooldown est fini
-	pthread_cond_t	cond; // La salle d'attente pour ce dongle
 	void			*wait_queue; // Pointeur vers futur (Heap/Priority Queue)
 }				t_dongle;
 
