@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:20:33 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 14:42:39 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
+#include <unistd.h>
 
 typedef enum e_scheduler
 {
@@ -85,35 +86,38 @@ typedef struct s_heap
 }				t_heap;
 
 // ================================  PARSING  ================================
+int			parse_arguments(int argc, char **argv, t_args *args);
 
-int		parse_arguments(int argc, char **argv, t_args *args);
+// ================================ INIT =================================
+int			init_simulation(t_sim *sim);
 
 // ================================  CLEANUP  ================================
-
-void	free_simulation(t_sim *sim);
+void		free_simulation(t_sim *sim);
 
 // ===============================  HEAP UTILS  ==============================
+int			is_more_vip(t_coder *c1, t_coder *c2, t_scheduler policy);
+void		swap_coders(t_coder **a, t_coder **b);
+void		sift_up(t_heap *heap, size_t idx, t_scheduler policy);
+void		sift_down(t_heap *heap, size_t idx, t_scheduler policy);
 
-int		is_more_vip(t_coder *c1, t_coder *c2, t_scheduler policy);
-void	swap_coders(t_coder **a, t_coder **b);
-void	sift_up(t_heap *heap, size_t idx, t_scheduler policy);
-void	sift_down(t_heap *heap, size_t idx, t_scheduler policy);
+// ================================ UTILS ================================
+long long	get_time_in_ms(void);
+void		print_state(t_coder *coder, const char *msg);
+void		smart_sleep(long long time_to_sleep, t_sim *sim);
 
 // ===============================  SCHEDULER  ===============================
+int			init_heap(t_heap *heap, size_t capacity);
+void		free_heap(t_heap *heap);
+int			heap_push(t_heap *heap, t_coder *coder, t_scheduler policy);
+t_coder		*heap_pop(t_heap *heap, t_scheduler policy);
 
-int		init_heap(t_heap *heap, size_t capacity);
-void	free_heap(t_heap *heap);
-int		heap_push(t_heap *heap, t_coder *coder, t_scheduler policy);
-t_coder	*heap_pop(t_heap *heap, t_scheduler policy);
+// =======================  ROUTINE, DONGLES & MONITOR =======================
+void		*coder_routine(void *arg);
+void		*monitor_routine(void *arg);
+void		take_dongles(t_coder *coder);
+void		drop_dongles(t_coder *coder);
 
-// ================================  ROUTINE  ================================
-
-void	*coder_routine(void *arg);
-void	take_dongles(t_coder *coder);
-void	drop_dongles(t_coder *coder);
-
-// ================================  MONITOR  ================================
-
-void	*monitor_routine(void *arg);
+// ================================  LAUNCHER  ================================
+int			launch_simulation(t_sim *sim);
 
 #endif

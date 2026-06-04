@@ -7,8 +7,13 @@ SRCS        = main.c \
 			  src/parsing.c \
 			  src/init.c \
 			  src/cleanup.c \
+			  src/utils.c \
 			  src/heap_utils.c \
-			  src/scheduler.c
+			  src/scheduler.c \
+			  src/dongles.c \
+			  src/routine.c \
+			  src/monitor.c \
+			  src/launcher.c
 
 all: $(NAME)
 
