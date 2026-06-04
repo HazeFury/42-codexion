@@ -6,11 +6,24 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 11:28:41 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:28:42 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:50:34 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+/*
+** Safely checks if the simulation is still running.
+*/
+int	check_sim(t_coder *coder)
+{
+	int	status;
+
+	pthread_mutex_lock(&coder->sim->sim_mutex);
+	status = coder->sim->is_running;
+	pthread_mutex_unlock(&coder->sim->sim_mutex);
+	return (status);
+}
 
 /*
 ** Checks if a single coder has burned out.

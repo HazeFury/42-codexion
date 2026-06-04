@@ -6,24 +6,11 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 11:28:49 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 16:55:51 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:50:41 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-/*
-** Safely checks if the simulation is still running.
-*/
-static int	check_sim(t_coder *coder)
-{
-	int	status;
-
-	pthread_mutex_lock(&coder->sim->sim_mutex);
-	status = coder->sim->is_running;
-	pthread_mutex_unlock(&coder->sim->sim_mutex);
-	return (status);
-}
 
 /*
 ** Lazy initialization of the dongle's wait queue.

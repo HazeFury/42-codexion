@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 14:42:39 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:50:12 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
-#include <unistd.h>
+# include <unistd.h>
 
 typedef enum e_scheduler
 {
@@ -114,6 +114,7 @@ t_coder		*heap_pop(t_heap *heap, t_scheduler policy);
 // =======================  ROUTINE, DONGLES & MONITOR =======================
 void		*coder_routine(void *arg);
 void		*monitor_routine(void *arg);
+int			check_sim(t_coder *coder);
 void		take_dongles(t_coder *coder);
 void		drop_dongles(t_coder *coder);
 
