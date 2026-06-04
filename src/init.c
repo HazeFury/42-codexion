@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:20:15 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:29:20 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:32:44 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,15 @@ int	init_simulation(t_sim *sim)
 	sim->dongles = malloc(sizeof(t_dongle) * sim->args.number_of_coders);
 	if (!sim->dongles)
 		return (0);
+	memset(sim->dongles, 0, sizeof(t_dongle) * sim->args.number_of_coders);
 	sim->coders = malloc(sizeof(t_coder) * sim->args.number_of_coders);
 	if (!sim->coders)
 	{
 		free(sim->dongles);
+		sim->dongles = NULL;
 		return (0);
 	}
+	memset(sim->coders, 0, sizeof(t_coder) * sim->args.number_of_coders);
 	if (!init_global_mutexes(sim) || !init_dongles(sim) || !init_coders(sim))
 		return (0);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 11:28:49 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:30:39 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:55:51 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,32 @@ static int	check_sim(t_coder *coder)
 /*
 ** Lazy initialization of the dongle's wait queue.
 ** Called only the first time a dongle is requested.
+** Returns 1 on success, 0 on malloc failure.
 */
-static void	init_d_heap(t_coder *coder, t_dongle *dongle)
+static int	init_d_heap(t_coder *coder, t_dongle *dongle)
 {
 	dongle->wait_queue = malloc(sizeof(t_heap));
-	init_heap((t_heap *)dongle->wait_queue,
-		coder->sim->args.number_of_coders);
+	if (!dongle->wait_queue)
+		return (0);
+	if (!init_heap((t_heap *)dongle->wait_queue,
+			coder->sim->args.number_of_coders))
+	{
+		free(dongle->wait_queue);
+		dongle->wait_queue = NULL;
+		return (0);
+	}
+	return (1);
+}
+
+/*
+** Helper to gracefully abort the simulation if a malloc fails dynamically.
+*/
+static void	handle_heap_fail(t_coder *coder, t_dongle *dongle)
+{
+	pthread_mutex_lock(&coder->sim->sim_mutex);
+	coder->sim->is_running = 0;
+	pthread_mutex_unlock(&coder->sim->sim_mutex);
+	pthread_mutex_unlock(&dongle->mutex);
 }
 
 /*
@@ -46,17 +66,18 @@ static void	acquire_dongle(t_coder *coder, t_dongle *dongle)
 	t_heap	*heap;
 
 	pthread_mutex_lock(&dongle->mutex);
-	if (!dongle->wait_queue)
-		init_d_heap(coder, dongle);
+	if (!dongle->wait_queue && !init_d_heap(coder, dongle))
+	{
+		handle_heap_fail(coder, dongle);
+		return ;
+	}
 	heap = (t_heap *)dongle->wait_queue;
 	heap_push(heap, coder, coder->sim->args.scheduler);
 	while (check_sim(coder))
 	{
 		if (dongle->available_at != -1 && heap->array[0] == coder)
-		{
 			if (get_time_in_ms() >= dongle->available_at)
 				break ;
-		}
 		pthread_mutex_unlock(&dongle->mutex);
 		usleep(500);
 		pthread_mutex_lock(&dongle->mutex);
@@ -86,8 +107,9 @@ void	take_dongles(t_coder *coder)
 		second = coder->left_dongle;
 	}
 	acquire_dongle(coder, first);
-	if (check_sim(coder))
-		print_state(coder, "has taken a dongle");
+	if (!check_sim(coder))
+		return ;
+	print_state(coder, "has taken a dongle");
 	acquire_dongle(coder, second);
 	if (check_sim(coder))
 		print_state(coder, "has taken a dongle");
