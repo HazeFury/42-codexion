@@ -28,6 +28,21 @@ Codexion is an advanced system programming project from the 42 curriculum. It in
 
 To manage resource allocation, the project implements a custom priority queue (Min-Heap) that acts as an intelligent scheduler, arbitrating dongle distribution using either a First-In-First-Out (FIFO) or an Earliest Deadline First (EDF) algorithm.
 
+### Illustration
+
+```
+		   ---- [ CODER 1 ] ---
+          /                    \
+     (Dongle 0)                 (Dongle 1)
+       /                           \
+ [ CODER 5 ]     >COMPILER<      [ CODER 2 ]
+       \                           /
+     (Dongle 4)                 (Dongle 2)
+         \                       /
+ 	[ CODER 4 ] --(Dongle 3)--[ CODER 3 ]
+```   
+
+
 ## II. Instructions
 
 To compile the project, run the Makefile at the root of the repository.
@@ -98,3 +113,4 @@ It was also used to help building this readme.
 - **Race condition prevention:** Data races are eliminated by strict lock ordering. For instance, when the monitor detects a burnout, it locks the `write_mutex` first, then the `sim_mutex`. The coder threads follow this exact same order when logging their actions, completely removing the risk of cross-locking.
 
 - **Thread-safe communication:** The monitor and coder threads never communicate directly. They read and update shared state variables (`last_compile_start`, `compiles_done`) safely wrapped in individual `state_mutexes`. Furthermore, dynamic memory allocation failures during thread creation trigger a clean rollback mechanism, joining existing threads before exiting to prevent memory leaks.
+

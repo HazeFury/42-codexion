@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 11:29:09 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:30:33 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/05 11:52:49 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@ static void	compile_phase(t_coder *coder)
 	pthread_mutex_unlock(&coder->state_mutex);
 	print_state(coder, "is compiling");
 	smart_sleep(coder->sim->args.time_to_compile, coder->sim);
-}
-
-/*
-** Helper to check if the simulation is still running safely.
-*/
-static int	is_sim_running(t_coder *coder)
-{
-	int	status;
-
-	pthread_mutex_lock(&coder->sim->sim_mutex);
-	status = coder->sim->is_running;
-	pthread_mutex_unlock(&coder->sim->sim_mutex);
-	return (status);
 }
 
 /*

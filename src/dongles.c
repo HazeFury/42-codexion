@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 11:28:49 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 17:50:41 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/05 11:52:32 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	acquire_dongle(t_coder *coder, t_dongle *dongle)
 	}
 	heap = (t_heap *)dongle->wait_queue;
 	heap_push(heap, coder, coder->sim->args.scheduler);
-	while (check_sim(coder))
+	while (is_sim_running(coder))
 	{
 		if (dongle->available_at != -1 && heap->array[0] == coder)
 			if (get_time_in_ms() >= dongle->available_at)
@@ -69,7 +69,7 @@ static void	acquire_dongle(t_coder *coder, t_dongle *dongle)
 		usleep(500);
 		pthread_mutex_lock(&dongle->mutex);
 	}
-	if (check_sim(coder))
+	if (is_sim_running(coder))
 	{
 		dongle->available_at = -1;
 		heap_pop(heap, coder->sim->args.scheduler);
@@ -94,11 +94,11 @@ void	take_dongles(t_coder *coder)
 		second = coder->left_dongle;
 	}
 	acquire_dongle(coder, first);
-	if (!check_sim(coder))
+	if (!is_sim_running(coder))
 		return ;
 	print_state(coder, "has taken a dongle");
 	acquire_dongle(coder, second);
-	if (check_sim(coder))
+	if (is_sim_running(coder))
 		print_state(coder, "has taken a dongle");
 }
 
