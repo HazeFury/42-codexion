@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:51 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 21:50:53 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/05 11:52:32 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ typedef struct s_dongle
 	void			*wait_queue; // Pointeur vers futur (Heap/Priority Queue)
 }				t_dongle;
 
-// Forward declaration pour que le pointeur vers la simulation compile
-/* ** FORWARD DECLARATION 
-** We promise the compiler that t_sim exists and will be defined later.
-** This allows us to use t_sim* inside t_coder.
-*/
+// FORWARD DECLARATION
 typedef struct s_sim	t_sim;
 
 typedef struct s_coder
@@ -113,7 +109,7 @@ t_coder		*heap_pop(t_heap *heap, t_scheduler policy);
 // =======================  ROUTINE, DONGLES & MONITOR =======================
 void		*coder_routine(void *arg);
 void		*monitor_routine(void *arg);
-int			check_sim(t_coder *coder);
+int			is_sim_running(t_coder *coder);
 void		take_dongles(t_coder *coder);
 void		drop_dongles(t_coder *coder);
 

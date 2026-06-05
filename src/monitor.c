@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 11:28:41 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 17:50:34 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/05 11:52:52 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 ** Safely checks if the simulation is still running.
 */
-int	check_sim(t_coder *coder)
+int	is_sim_running(t_coder *coder)
 {
 	int	status;
 
