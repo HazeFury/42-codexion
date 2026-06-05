@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 11:55:21 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:29:28 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:50:45 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	free_dongles(t_sim *sim)
 			free(sim->dongles[i].wait_queue);
 		}
 		pthread_mutex_destroy(&sim->dongles[i].mutex);
-		pthread_cond_destroy(&sim->dongles[i].cond);
 		i++;
 	}
 	free(sim->dongles);

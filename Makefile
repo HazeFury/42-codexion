@@ -7,8 +7,13 @@ SRCS        = main.c \
 			  src/parsing.c \
 			  src/init.c \
 			  src/cleanup.c \
+			  src/utils.c \
 			  src/heap_utils.c \
-			  src/scheduler.c
+			  src/scheduler.c \
+			  src/dongles.c \
+			  src/routine.c \
+			  src/monitor.c \
+			  src/launcher.c
 
 all: $(NAME)
 
@@ -19,9 +24,6 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 -include $(SRCS:.c=.d)
-
-run: $(NAME)
-	./$(NAME)
 
 clean:
 	@rm -f $(OBJS) $(SRCS:.c=.d)
@@ -38,4 +40,4 @@ test: $(NAME)
 	@echo "Launching all tests..."
 	@pytest tests/test_parsing.py -v
 
-.PHONY: all clean fclean re test run
+.PHONY: all clean fclean re test

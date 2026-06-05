@@ -6,7 +6,7 @@
 /*   By: marberge <marberge@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:40:54 by marberge          #+#    #+#             */
-/*   Updated: 2026/06/04 11:37:02 by marberge         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:28:50 by marberge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,23 @@
 
 int	main(int argc, char **argv)
 {
-	t_args	args;
+	t_sim	sim;
 
-	memset(&args, 0, sizeof(t_args));
-	if (!parse_arguments(argc, argv, &args))
+	memset(&sim, 0, sizeof(t_sim));
+	if (!parse_arguments(argc, argv, &sim.args))
 		return (1);
+	if (!init_simulation(&sim))
+	{
+		printf("Error: Initialization failed.\n");
+		free_simulation(&sim);
+		return (1);
+	}
+	if (!launch_simulation(&sim))
+	{
+		printf("Error: Thread creation failed.\n");
+		free_simulation(&sim);
+		return (1);
+	}
+	free_simulation(&sim);
 	return (0);
 }
